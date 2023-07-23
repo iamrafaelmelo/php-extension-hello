@@ -1,7 +1,5 @@
-/* hello extension for PHP */
-
 #ifdef HAVE_CONFIG_H
-# include "config.h"
+#include "config.h"
 #endif
 
 #include "php.h"
@@ -9,54 +7,50 @@
 #include "php_hello.h"
 #include "hello_arginfo.h"
 
-/* For compatibility with older PHP versions */
+/* MACRO: For compatibility with older PHP versions */
 #ifndef ZEND_PARSE_PARAMETERS_NONE
 #define ZEND_PARSE_PARAMETERS_NONE() \
 	ZEND_PARSE_PARAMETERS_START(0, 0) \
 	ZEND_PARSE_PARAMETERS_END()
 #endif
 
-/* {{{ void test1() */
-PHP_FUNCTION(test1)
+PHP_METHOD(Hello, __construct)
 {
-	ZEND_PARSE_PARAMETERS_NONE();
-
-	php_printf("The extension %s is loaded and working!\r\n", "hello");
+	// ...
 }
-/* }}} */
 
-/* {{{ string test2( [ string $var ] ) */
-PHP_FUNCTION(test2)
+PHP_METHOD(Hello, message)
 {
-	char *var = "World";
-	size_t var_len = sizeof("World") - 1;
-	zend_string *retval;
+	php_printf("Hello, world!\r\n");
+}
+
+PHP_METHOD(Hello, write)
+{
+	char* message;
+	size_t message_length = sizeof(message) - 1;
+	zend_string* result;
 
 	ZEND_PARSE_PARAMETERS_START(0, 1)
 		Z_PARAM_OPTIONAL
-		Z_PARAM_STRING(var, var_len)
+		Z_PARAM_STRING(message, message_length)
 	ZEND_PARSE_PARAMETERS_END();
 
-	retval = strpprintf(0, "Hello %s", var);
+	result = strpprintf(0, "%s", message);
 
-	RETURN_STR(retval);
+	RETURN_STR(result);
 }
-/* }}}*/
 
-/* {{{ string message( [ string $message ] ) */
-PHP_FUNCTION(message)
+PHP_METHOD(Hello, version)
 {
-	char *string = NULL;
-	size_t string_length = sizeof(string) - 1;
-	zend_string *retval;
+	php_printf("%s\r\n", PHP_HELLO_VERSION);
+}
 
-	ZEND_PARSE_PARAMETERS_START(1, 1)
-		Z_PARAM_STRING(string, string_length);
-	ZEND_PARSE_PARAMETERS_END();
+/* {{{ PHP_MINIT_FUNCTION */
+PHP_MINIT_FUNCTION(hello)
+{
+	register_class_Hello();
 
-	retval = strpprintf(0, "%s", string);
-
-	RETURN_STR(retval);
+	return SUCCESS;
 }
 /* }}} */
 
@@ -76,29 +70,29 @@ PHP_MINFO_FUNCTION(hello)
 {
 	php_info_print_table_start();
 	php_info_print_table_header(2, "hello support", "enabled");
-	php_info_print_table_row(2, "Version", PHP_HELLO_VERSION);
+	php_info_print_table_row(2, "version", PHP_HELLO_VERSION);
 	php_info_print_table_end();
 }
 /* }}} */
 
 /* {{{ hello_module_entry */
 zend_module_entry hello_module_entry = {
-	STANDARD_MODULE_HEADER,
-	"hello",					/* Extension name */
-	ext_functions,					/* zend_function_entry */
-	NULL,							/* PHP_MINIT - Module initialization */
-	NULL,							/* PHP_MSHUTDOWN - Module shutdown */
-	PHP_RINIT(hello),			/* PHP_RINIT - Request initialization */
-	NULL,							/* PHP_RSHUTDOWN - Request shutdown */
-	PHP_MINFO(hello),			/* PHP_MINFO - Module info */
-	PHP_HELLO_VERSION,		/* Version */
-	STANDARD_MODULE_PROPERTIES
+	STANDARD_MODULE_HEADER,     // Core: This MACRO fills in everything up to the 'deps' field
+	"hello",					// Extension: Name
+	class_Hello_methods,		// Core: Struct 'zend_function_entry'
+	PHP_MINIT(hello),			// Core: PHP_MINIT (module initialization)
+	NULL,						// Core: PHP_MSHUTDOWN (module shutdown)
+	PHP_RINIT(hello),			// Core: PHP_RINIT (request initialization)
+	NULL,						// Core: PHP_RSHUTDOWN (request shutdown0
+	PHP_MINFO(hello),			// Core: PHP_MINFO (Module info)
+	PHP_HELLO_VERSION,			// Extension: Version
+	STANDARD_MODULE_PROPERTIES  // Core: This MACRO will fill in the rest of the structure 
 };
 /* }}} */
 
 #ifdef COMPILE_DL_HELLO
-# ifdef ZTS
+#ifdef ZTS
 ZEND_TSRMLS_CACHE_DEFINE()
-# endif
+#endif
 ZEND_GET_MODULE(hello)
 #endif

@@ -1,9 +1,14 @@
 <?php
 
-/** @generate-class-entries */
+/**
+ * @generate-function-entries
+ * @generate-class-entries
+ */
 
-function test1(): void {}
-
-function test2(string $str = ""): string {}
-
-function message(string $message): void {}
+class Hello
+{
+    public function __construct() {}
+    public function message(): string {}
+    public function write(string $message): string {}
+    public function version(): string {}
+}

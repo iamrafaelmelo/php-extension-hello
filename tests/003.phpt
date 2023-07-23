@@ -1,12 +1,13 @@
 --TEST--
-test2() Basic test
+Check if can be call version method
 --EXTENSIONS--
 hello
 --FILE--
 <?php
-var_dump(test2());
-var_dump(test2('PHP'));
+$hello = new Hello();
+$version = $hello->version();
+
+var_dump(version);
 ?>
 --EXPECT--
-string(11) "Hello World"
-string(9) "Hello PHP"
+0.2.0

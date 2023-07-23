@@ -1,13 +1,13 @@
 --TEST--
-test1() Basic test
+Check if can be call message method
 --EXTENSIONS--
 hello
 --FILE--
 <?php
-$ret = test1();
+$hello = new Hello();
+$message = $hello->message();
 
-var_dump($ret);
+var_dump($message);
 ?>
 --EXPECT--
-The extension hello is loaded and working!
-NULL
+Hello, world!

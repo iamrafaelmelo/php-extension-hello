@@ -1,11 +1,13 @@
 --TEST--
-message() Check if message is print
+Check if can be call write method
 --EXTENSIONS--
 hello
 --FILE--
 <?php
-var_dump(message());
-var_dump(message('PHP'));
+$hello = new Hello();
+$write = $hello->write("Something happens and i'm head over heels.");
+
+var_dump(write);
 ?>
 --EXPECT--
-string(3) "PHP"
+Something happens and i'm head over heels.
