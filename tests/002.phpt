@@ -10,4 +10,4 @@ $message = $hello->message();
 var_dump($message);
 ?>
 --EXPECT--
-Hello, world!
+string(13) "Hello, World!"

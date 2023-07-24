@@ -21,7 +21,7 @@ PHP_METHOD(Hello, __construct)
 
 PHP_METHOD(Hello, message)
 {
-	php_printf("Hello, world!\r\n");
+	RETURN_STRING("Hello, World!");
 }
 
 PHP_METHOD(Hello, write)
@@ -42,7 +42,7 @@ PHP_METHOD(Hello, write)
 
 PHP_METHOD(Hello, version)
 {
-	php_printf("%s\r\n", PHP_HELLO_VERSION);
+	RETURN_STRING(PHP_HELLO_VERSION);
 }
 
 /* {{{ PHP_MINIT_FUNCTION */
@@ -86,7 +86,7 @@ zend_module_entry hello_module_entry = {
 	NULL,						// Core: PHP_RSHUTDOWN (request shutdown0
 	PHP_MINFO(hello),			// Core: PHP_MINFO (Module info)
 	PHP_HELLO_VERSION,			// Extension: Version
-	STANDARD_MODULE_PROPERTIES  // Core: This MACRO will fill in the rest of the structure 
+	STANDARD_MODULE_PROPERTIES  // Core: This MACRO will fill in the rest of the structure
 };
 /* }}} */
 

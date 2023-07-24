@@ -7,7 +7,7 @@ hello
 $hello = new Hello();
 $write = $hello->write("Something happens and i'm head over heels.");
 
-var_dump(write);
+var_dump($write);
 ?>
 --EXPECT--
-Something happens and i'm head over heels.
+string(42) "Something happens and i'm head over heels."
