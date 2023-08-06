@@ -20,6 +20,13 @@ Calling methods
 
 <details>
 <summary>
+Constants
+</summary>
+<img src="./.github/screenshots/constants.png">
+</details>
+
+<details>
+<summary>
 With Reflection API
 </summary>
 <img src="./.github/screenshots/reflection.png">

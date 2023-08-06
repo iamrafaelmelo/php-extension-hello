@@ -1,6 +1,9 @@
 /* This is a generated file, edit the .stub.php file instead.
  * Stub hash: 98f0f266d7ae0f9347881031443ee1dc7332d35a */
 
+#define HELLO_VERSION "0.1.2"
+#define HELLO_DEFAULT_MESSAGE "Hello, world!"
+
 ZEND_BEGIN_ARG_INFO_EX(arginfo_class_Hello___construct, 0, 0, 0)
 ZEND_END_ARG_INFO()
 
@@ -32,6 +35,9 @@ static zend_class_entry *register_class_Hello(void)
 
 	INIT_CLASS_ENTRY(ce, "Hello", class_Hello_methods);
 	class_entry = zend_register_internal_class_ex(&ce, NULL);
+
+    zend_declare_class_constant_string(class_entry, "VERSION", sizeof("VERSION") - 1, HELLO_VERSION);
+    zend_declare_class_constant_string(class_entry, "MESSAGE", sizeof("MESSAGE") - 1, HELLO_DEFAULT_MESSAGE);
 
 	return class_entry;
 }
